@@ -1,0 +1,13 @@
+#all the required softwares for this project, each gets downloaded into the
+#virtual environment venv so they dont global download to the computer
+
+torch>=2.0.0
+torchvision>=0.15.0
+ultralytics>=8.0.0
+opencv-python>=4.8.0
+numpy>=1.24.0
+pandas>=2.0.0
+flask>=3.0.0
+kaggle>=1.5.0
+pillow>=10.0.0
+matplotlib>=3.7.0
