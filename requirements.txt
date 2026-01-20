@@ -1,6 +1,6 @@
 #all the required softwares for this project, each gets downloaded into the
 #virtual environment venv so they dont global download to the computer
-
+#test comment
 torch>=2.0.0
 torchvision>=0.15.0
 ultralytics>=8.0.0
