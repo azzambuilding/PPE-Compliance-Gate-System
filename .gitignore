@@ -205,3 +205,51 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+#project specific gitignore code, mainly for data
+# Machine Learning Models
+*.pt
+*.pth
+*.onnx
+models/trained/*
+models/pretrained/*
+!models/*/.gitkeep
+
+# Datasets
+data/raw/*
+data/processed/*
+!data/*/.gitkeep
+*.zip
+*.tar.gz
+
+# Database
+*.db
+*.sqlite3
+database/*.db
+
+# Logs & Outputs
+logs/
+logs/violations/*
+!logs/.gitkeep
+outputs/
+runs/
+
+# Environment & Secrets
+.env
+kaggle.json
+secrets.json
+
+# Frontend (React)
+frontend/node_modules/
+frontend/build/
+frontend/.env.local
+
+# MacOS
+.DS_Store
+
+# Large Media Files
+*.jpg
+*.png
+*.mp4
+!frontend/public/*.png
+!README_assets/*.png
