@@ -1,3 +1,22 @@
 # PPE-Compliance-Gate-System
 
 Overview: A computer vision checkpoint system that verifies workers wear required safety equipment before entering construction sites. Uses YOLOv8 object detection to identify hard hats, safety vests, gloves, and safety glasses in real-time video feeds at site entrances. When a worker approaches the gate, the system scans for all required PPE items within 2 seconds, displays pass/fail status on a screen, and logs entry attempts with timestamped photos. Non-compliant workers receive immediate visual/audio feedback and cannot proceed until equipped properly. Dashboard shows live compliance rates, frequent violators, and generates daily reports for safety managers with photo evidence for OSHA documentation.
+
+
+setup instructions
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/azzambuilding/PPE-Compliance-Gate-System.git
+cd PPE-Compliance-Gate-System
+```
+
+### 2. Create Virtual Environment
+```bash
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
