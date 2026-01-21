@@ -20,3 +20,13 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 ### 3. Install Dependencies
 ```bash
 pip install -r requirements.txt
+
+
+###file formatting
+
+/models - trained YOLOv8 weights
+/data - sample images and datasets
+    /raw - ran once from kaggle
+    /processed - data used for training in YAML
+/src - main detection scripts
+/utils - helper functions
