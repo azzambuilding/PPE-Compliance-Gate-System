@@ -21,6 +21,11 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```bash
 pip install -r requirements.txt
 
+### 4. Download ipyb notebook and run. Lower epochs if GPU usage maxes or is not capable. 
+```bash
+https://colab.research.google.com/drive/1DQsrHNaIBA2Bs_ZDgDnLB8p96xrKXAay?usp=sharing
+
+
 
 ###file formatting
 
