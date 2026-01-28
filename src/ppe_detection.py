@@ -4,7 +4,7 @@ from ultralytics import YOLO
 import cv2
 
 # Load your trained model
-model = YOLO('best.pt')  # Make sure best.pt is in same folder
+model = YOLO('models/best.pt')  # Make sure best.pt is in same folder
 
 # Classes you care about (adjust based on your needs)
 PPE_CLASSES = {
