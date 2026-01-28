@@ -2,11 +2,25 @@
 
 from ultralytics import YOLO
 import cv2
+import os
 
-# Load your trained model
-model = YOLO('models/best.pt')  # Make sure best.pt is in same folder
+# Get absolute path to model
+script_dir = os.path.dirname(os.path.abspath(__file__))  # /Users/.../src/
+project_dir = os.path.dirname(script_dir)                # /Users/.../PPE-Compliance-Gate-System/
+model_path = os.path.join(project_dir, 'models', 'best.pt')
 
-# Classes you care about (adjust based on your needs)
+print(f"📁 Project directory: {project_dir}")
+print(f"🔍 Looking for model at: {model_path}")
+
+# Check if model exists
+if not os.path.exists(model_path):
+    print(f"❌ ERROR: Model not found at {model_path}")
+    exit(1)
+
+print(f"✅ Loading model...")
+model = YOLO(model_path)
+
+# Classes you care about
 PPE_CLASSES = {
     'Hardhat': 3,
     'Safety Vest': 13,
@@ -19,14 +33,19 @@ PPE_CLASSES = {
 }
 
 # Open webcam
+print("🎥 Starting PPE Detection...")
+print("Press 'q' to quit\n")
+
 cap = cv2.VideoCapture(0)  # 0 = default camera
 
-print("🎥 Starting PPE Detection...")
-print("Press 'q' to quit")
+if not cap.isOpened():
+    print("❌ ERROR: Could not open camera")
+    exit(1)
 
 while True:
     ret, frame = cap.read()
     if not ret:
+        print("❌ Failed to grab frame")
         break
     
     # Run detection
