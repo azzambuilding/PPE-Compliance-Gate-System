@@ -21,12 +21,19 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```bash
 pip install -r requirements.txt
 
+### 4. Change directory
+```bash
+cd src
+#
+then run python3 ppe_detection.py
+
 
 ###file formatting
 
 /models - trained YOLOv8 weights
-/data - sample images and datasets
-    /raw - ran once from kaggle
-    /processed - data used for training in YAML
+    -best.pt - best model achieved from 30 epochs of training
+
 /src - main detection scripts
+    -ppe_detection.py YOLO
+    -database.py PostgreSQL
 /utils - helper functions
