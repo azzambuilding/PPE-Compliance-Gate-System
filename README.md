@@ -37,3 +37,6 @@ then run python3 ppe_detection.py
     -ppe_detection.py YOLO
     -database.py PostgreSQL
 /utils - helper functions
+-requirements.txt
+-README.md
+-.env this is where your postgreSQL password/username/port ect private information go
