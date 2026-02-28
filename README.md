@@ -2,8 +2,16 @@
 
 Overview: A computer vision checkpoint system that verifies workers wear required safety equipment before entering construction sites. Uses YOLOv8 object detection to identify hard hats, safety vests, gloves, and safety glasses in real-time video feeds at site entrances. When a worker approaches the gate, the system scans for all required PPE items within 2 seconds, displays pass/fail status on a screen, and logs entry attempts with timestamped photos. Non-compliant workers receive immediate visual/audio feedback and cannot proceed until equipped properly. Dashboard shows live compliance rates, frequent violators, and generates daily reports for safety managers with photo evidence for OSHA documentation.
 
+## Model Training
 
-setup instructions
+The YOLOv8 model was trained on Google Colab over 30 epochs on a custom PPE dataset.
+You can view, run, or retrain the model using the notebook below:
+
+https://colab.research.google.com/drive/1DQsrHNaIBA2Bs_ZDgDnLB8p96xrKXAay?usp=sharing
+
+> **Note:** Make sure to save a copy to your own Drive before making changes (`File -> Save a copy in Drive`).
+
+## Setup Instructions
 
 ### 1. Clone the Repository
 ```bash
