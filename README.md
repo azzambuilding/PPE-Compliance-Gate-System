@@ -44,6 +44,7 @@ then run python3 ppe_detection.py
 /src - main detection scripts
     -ppe_detection.py YOLO
     -database.py PostgreSQL
+    -confidence_helper.py bridges accuracy gap of classes using weighted decision tree and inverse logic multipliers.
 /utils - helper functions
 -requirements.txt
 -README.md
