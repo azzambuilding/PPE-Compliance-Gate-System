@@ -49,13 +49,15 @@ to beat the inverse Hardhat calculation; otherwise, trust the more reliable inve
 #Hardhat mAP@50 = 0.905 : No-Hardhat mAP@50 = 0.746
 #0.905 / 0.746 = 1.213 hardcoded a reliability multiplier to equal out the reliability of both when comparing
 reliability_multiplier = 1.213 
-hard_hat_conf = 0.0 #class 3
-no_hard_hat_conf = 0.0 #class 8
+#Safety vest mAP@50 mAP@50 = 0.682 : No-safety vest mAP@50 = 0.22
+reliability_multiplier_vest = 3.07
 high_conf = 0.75
 low_conf = 0.25
 
-def check_hardhat_violation(detections): #detection 1 = hardhat conf, detection2 = noo hardhat conf
+def check_hardhat_violation(detections): 
 
+    hard_hat_conf = 0.0 #class 3
+    no_hard_hat_conf = 0.0 #class 8
 
     for box in detections:
         if box.cls == 3: #cls = class
@@ -73,7 +75,7 @@ def check_hardhat_violation(detections): #detection 1 = hardhat conf, detection2
             'violation' : True,
             'confidence' : inverse_hardhat,
             'source' : 'inverse_hardhat',
-            'reason' : 'primary detector very confident'
+            'reason' : 'primary detector very confident - no hardhat'
         }
     
     #branch 2: very confident hardhat IS present (inverse < 0.25)
@@ -101,7 +103,7 @@ def check_hardhat_violation(detections): #detection 1 = hardhat conf, detection2
                 'violation': inverse_hardhat >= 0.5,
                 'confidence': inverse_hardhat,
                 'source': 'adjusted inverse',
-                'reason': 'adjusted inverse opinion ovveride '
+                'reason': 'adjusted inverse opinion ovveride - '
             }
         #3c: no other branch is true result relies on 'no hard hat detector'.
         else:
@@ -110,6 +112,69 @@ def check_hardhat_violation(detections): #detection 1 = hardhat conf, detection2
                 'confidence' : no_hard_hat_conf,
                 'source' : 'no_hardhat_detector',
                 'reason' : 'NO-Hardhat detector wins weighted comparison'
+            }
+
+high_conf1 = 0.5
+low_conf1 =  0.2
+
+def check_safety_vest_violation(detections): 
+
+    safety_vest_conf = 0.0 #class 13
+    no_safety_vest_conf = 0.0 #class 10
+
+    for box in detections:
+        if box.cls == 13: #cls = class
+            safety_vest_conf = float(box.conf[0])
+
+        elif box.cls == 10:
+            no_safety_vest_conf = float(box.conf[0])
+
+    inverse_safety_vest = 1 - safety_vest_conf
+    adjusted_inverse = reliability_multiplier_vest * inverse_safety_vest
+
+    #branch 1: Very confient NO safety vest > 0.75
+    if inverse_safety_vest > high_conf1:
+        return {
+            'violation' : True,
+            'confidence' : inverse_safety_vest,
+            'source' : 'inverse_Safety_vest',
+            'reason' : 'primary detector very confident - no safety vest'
+        }
+    
+    #branch 2: very confident safety vest IS present (inverse < 0.25)
+    elif inverse_safety_vest < low_conf1:
+        return {
+            'violation' : False,
+            'confidence' : safety_vest_conf,
+            'source' : 'Safety_Vest_high_confidence',
+            'reason' : 'primary detector very confident - safety vest present'
+        }
+    
+    #branch 3: uncertain zone, uses secondary opinion
+    else: 
+        # 3a: NO-safety vest detector very confident AND beats adjusted inverse
+        if no_safety_vest_conf > high_conf1 and no_safety_vest_conf > adjusted_inverse:
+            return {
+                'violation': True,
+                'confidence': no_safety_vest_conf,
+                'source': 'NO_Safety_vest_override',
+                'reason': 'Secondary detector very confident and overcomes reliability gap'
+            }
+        #3b: Uses the weighted comparison
+        elif adjusted_inverse > no_safety_vest_conf:
+            return {
+                'violation': inverse_safety_vest >= 0.5,
+                'confidence': inverse_safety_vest,
+                'source': 'adjusted inverse',
+                'reason': 'adjusted inverse opinion ovveride '
+            }
+        #3c: no other branch is true result relies on 'no safety vest detector'.
+        else:
+            return {
+                'violation' : no_safety_vest_conf >= 0.5,
+                'confidence' : no_safety_vest_conf,
+                'source' : 'no_safety_vest_detector',
+                'reason' : 'NO-Safety Vest detector wins weighted comparison'
             }
     
 
